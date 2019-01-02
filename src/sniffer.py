@@ -35,6 +35,20 @@ def callback(packet):
         if overflow != None:
             serverLogger.warning("Packet overflowed from buffer")
         serverLogger.debug("Captured packet - Queue len: " + str(buff.length()))
+        
+    elif ("ICMP") in packet.summary():
+        src_port = 0
+        dst_port = 0
+        src_ip = packet.sprintf("%IP.src%")
+        dst_ip = packet.sprintf("%IP.dst%")
+        src_mac = packet.sprintf("%src%")
+        dst_mac = packet.sprintf("%dst%")
+        msg = PacketMessage(src_mac, dst_mac, src_ip, dst_ip, src_port, dst_port)
+
+        overflow = buff.push(msg.__dict__)
+        if overflow != None:
+            serverLogger.warning("Packet overflowed from buffer")
+        serverLogger.debug("Captured packet - Queue len: " + str(buff.length()))
 
 def snifferThread():
     sniff(prn=callback)
