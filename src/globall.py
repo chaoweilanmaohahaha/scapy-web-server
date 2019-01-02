@@ -8,5 +8,5 @@
 from config import Config
 from util.ringbuffer import RingBuffer
 
-conf = Config("conf/localDebugConfig.ini")
+conf = Config("../conf/localDebugConfig.ini")
 buff = RingBuffer(conf.getBufferSize())    
